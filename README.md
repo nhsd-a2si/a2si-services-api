@@ -5,6 +5,12 @@ public internet.
 
 ## Developer Notes
 
+### Getting set up
+
+Everything runs inside Docker - even tests - so there aren't any dependencies for this project
+other than having the most recent version of [Docker Desktop](https://www.docker.com/products/docker-desktop)
+installed.
+
 ### Running unit and functional tests
 Both unit and functional tests are set up to run as part of the Django test suite. This runs at
 a code-only level - no stack - and so these are the fastest tests to run.
