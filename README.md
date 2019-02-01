@@ -59,3 +59,24 @@ $ curl -H "Content-Type: application/json" http://localhost:8000/placeholder/
 {"message":"This is the Placeholder API"}
 ```
 Or view it in a browser with descriptions etc, by going to <http://localhost:8000/placeholder/>
+
+## Testing Notes
+
+### Running the functional & unit tests
+
+Both the functional and unit tests run in the Django test suite. Running these requires 2 container
+images to be available:
+
+  - *a2si-services-api* The Django project
+  - *pycodestyle* The linter
+
+These can be built by any user / external process by running this _from the top level of the
+project_:
+```
+tests-functional/build.sh
+```
+Tests can then be run by running this _from the top level of the project_:
+```
+tests-functional/run.sh
+```
+Note that the tests fail immediately on the first failed step, exiting with a non-zero code.
