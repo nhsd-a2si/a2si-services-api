@@ -16,7 +16,10 @@ Linting - or (PEP-8)[https://www.python.org/dev/peps/pep-0008/] will be observed
 This linter checks the code for adherence.
 ```
 $ docker build -t pycodestyle pycodestyle
-$ docker run --rm -v "`pwd`:/code" pycodestyle ./services
+$ docker run --rm \
+    -v "`pwd`:/code" \
+    pycodestyle \
+    ./services
 ```
 
 ### Running unit and functional tests
@@ -26,7 +29,11 @@ a code-only level - no stack - and so these are the fastest tests to run.
 They test not only the operation of the framework but also the behaviour of the actual Services API.
 ```
 $ docker build -t a2si-services-api .
-$ docker run --rm -e "DJANGO_SECRET_KEY=NotReallyASecret" -v "`pwd`:/code" a2si-services-api ./services/manage.py test ./services
+$ docker run --rm \
+    -e "DJANGO_SECRET_KEY=NotReallyASecret" \
+    -v "`pwd`:/code" \
+    a2si-services-api \
+    ./services/manage.py test ./services
 ```
 (The 'build' step is only required if you have never run it or if the build details have changed
 since you last ran it).
@@ -35,7 +42,13 @@ since you last ran it).
 This will expose the Django dev server on localhost port 8000:
 ```
 $ docker build -t a2si-services-api .
-$ docker run --rm -e "DJANGO_SECRET_KEY=NotReallyASecret" -e "DJANGO_DEBUG_MODE=1" -v "`pwd`:/code" -p "8000:8000" a2si-services-api ./services/manage.py runserver 0.0.0.0:8000
+$ docker run --rm \
+     -e "DJANGO_SECRET_KEY=NotReallyASecret" \
+     -e "DJANGO_DEBUG_MODE=1" \
+     -p "8000:8000" \
+     -v "`pwd`:/code" \
+     a2si-services-api \
+     ./services/manage.py runserver 0.0.0.0:8000
 ```
 (The 'build' step is only required if you have never run it or if the build details have changed
 since you last ran it).
