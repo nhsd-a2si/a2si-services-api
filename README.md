@@ -28,3 +28,21 @@ They test not only the operation of the framework but also the behaviour of the 
 $ docker build -t a2si-services-api .
 $ docker run --rm -e "DJANGO_SECRET_KEY=NotReallyASecret" -v "`pwd`:/code" a2si-services-api ./services/manage.py test ./services
 ```
+(The 'build' step is only required if you have never run it or if the build details have changed
+since you last ran it).
+
+### Running the Django dev server
+This will expose the Django dev server on localhost port 8000:
+```
+$ docker build -t a2si-services-api .
+$ docker run --rm -e "DJANGO_SECRET_KEY=NotReallyASecret" -e "DJANGO_DEBUG_MODE=1" -v "`pwd`:/code" -p "8000:8000" a2si-services-api ./services/manage.py runserver 0.0.0.0:8000
+```
+(The 'build' step is only required if you have never run it or if the build details have changed
+since you last ran it).
+
+Verify the noddy 'placeholder' API like this:
+```
+$ curl -H "Content-Type: application/json" http://localhost:8000/placeholder/
+{"message":"This is the Placeholder API"}
+```
+Or view it in a browser with descriptions etc, by going to <http://localhost:8000/placeholder/>
