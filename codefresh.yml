@@ -2,6 +2,7 @@ version: '1.0'
 stages:
   - build
   - unit_test
+  - push_release_image
 
 steps:
   BuildAPIDockerImage:
@@ -37,3 +38,12 @@ steps:
     environment:
       - DJANGO_SECRET_KEY=NotReallyASecret
     stage: unit_test
+
+  PushReleaseImage:
+    type: push
+    title: "Push new service release to Docker Hub"
+    candidate: '${{BuildAPIDockerImage}}'
+    image_name: 'mcbhenwood/a2si-services-api'
+    registry: dockerhub
+    tag: latest
+    stage: push_release_image
