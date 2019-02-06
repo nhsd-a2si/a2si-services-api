@@ -3,6 +3,10 @@
 Framework and helpers to expose a Services API and onboarding / test facilities to the
 public internet.
 
+This is currently an alpha / Proof of Concept.
+
+[![Codefresh build status]( https://g.codefresh.io/api/badges/pipeline/mcbhenwood/nhsd-a2si%2Fa2si-services-api%2Fa2si-services-api-test?type=cf-1)]( https://g.codefresh.io/public/accounts/mcbhenwood/pipelines/nhsd-a2si/a2si-services-api/a2si-services-api-test)
+
 ## Developer Notes
 
 ### Getting set up
