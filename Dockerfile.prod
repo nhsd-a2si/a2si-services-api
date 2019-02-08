@@ -1,8 +1,8 @@
 FROM python:3.5-alpine
 ENV PYTHONUNBUFFERED 1
 WORKDIR /code
-COPY services/requirements-prod.txt /code/
-RUN pip install -r requirements-prod.txt
+COPY services/requirements /code/requirements
+RUN pip install -r requirements/base.txt -r requirements/prod.txt
 WORKDIR /code/services
 COPY services/api /code/services/api
 COPY services/services /code/services/services
