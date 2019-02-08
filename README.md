@@ -84,3 +84,12 @@ Tests can then be run by running this _from the top level of the project_:
 tests-functional/run.sh
 ```
 Note that the tests fail immediately on the first failed step, exiting with a non-zero code.
+
+### Running the End-to-End tests
+
+End to end tests require that the API be spun up and then interrogated from a separate container.
+These tests can be run as follows from the top level of the project:
+```
+$ docker-compose -f tests-e2e/docker-compose.e2etest.yml build
+$ docker-compose -f tests-e2e/docker-compose.e2etest.yml run e2etest
+```
