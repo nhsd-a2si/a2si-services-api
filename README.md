@@ -5,6 +5,9 @@ public internet.
 
 This is currently an alpha / Proof of Concept.
 
+Infrastructure provision is set out in the [a2si-services-api-infrastructure](https://github.com/nhsd-a2si/a2si-services-api-infrastructure)
+repo.
+
 [![Codefresh build status]( https://g.codefresh.io/api/badges/pipeline/mcbhenwood/nhsd-a2si%2Fa2si-services-api%2Fa2si-services-api-test?type=cf-1)]( https://g.codefresh.io/public/accounts/mcbhenwood/pipelines/nhsd-a2si/a2si-services-api/a2si-services-api-test)
 
 ## Developer Notes
