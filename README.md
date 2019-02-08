@@ -32,7 +32,7 @@ a code-only level - no stack - and so these are the fastest tests to run.
 
 They test not only the operation of the framework but also the behaviour of the actual Services API.
 ```
-$ docker build -t a2si-services-api-unittest .
+$ docker build -t a2si-services-api-unittest -f Dockerfile.dev .
 $ docker run --rm \
     -e "DJANGO_SECRET_KEY=NotReallyASecret" \
     -v "`pwd`:/code" \
@@ -48,7 +48,7 @@ code as it looks right now on your machine.
 ### Running the Django dev server
 This will expose the Django dev server on localhost port 8000:
 ```
-$ docker build -t a2si-services-api-devserver .
+$ docker build -t a2si-services-api-devserver  -f Dockerfile.dev .
 $ docker run --rm \
      -e "DJANGO_SECRET_KEY=NotReallyASecret" \
      -e "DJANGO_DEBUG_MODE=1" \

@@ -12,7 +12,7 @@ steps:
     type: build
     image_name: mcbhenwood/a2siservicesapi-unittest
     working_directory: ./
-    dockerfile: Dockerfile
+    dockerfile: Dockerfile.dev
     tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
     stage: build_unit_test
 
