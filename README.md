@@ -32,11 +32,11 @@ a code-only level - no stack - and so these are the fastest tests to run.
 
 They test not only the operation of the framework but also the behaviour of the actual Services API.
 ```
-$ docker build -t a2si-services-api-unittest -f Dockerfile.dev .
+$ docker build -t a2siservicesapi-unittest -f Dockerfile.dev .
 $ docker run --rm \
     -e "DJANGO_SECRET_KEY=NotReallyASecret" \
     -v "`pwd`:/code" \
-    a2si-services-api-unittest \
+    a2siservicesapi-unittest \
     ./services/manage.py test ./services
 ```
 (The 'build' step is only required if you have never run it or if the build details have changed
@@ -48,13 +48,13 @@ code as it looks right now on your machine.
 ### Running the Django dev server
 This will expose the Django dev server on localhost port 8000:
 ```
-$ docker build -t a2si-services-api-devserver  -f Dockerfile.dev .
+$ docker build -t a2siservicesapi-devserver -f Dockerfile.dev .
 $ docker run --rm \
      -e "DJANGO_SECRET_KEY=NotReallyASecret" \
      -e "DJANGO_DEBUG_MODE=1" \
      -p "8000:8000" \
      -v "`pwd`:/code" \
-     a2si-services-api-devserver \
+     a2siservicesapi-devserver \
      ./services/manage.py runserver 0.0.0.0:8000
 ```
 (The 'build' step is only required if you have never run it or if the build details have changed
@@ -77,7 +77,7 @@ Or view it in a browser with descriptions etc, by going to <http://localhost:800
 Both the functional and unit tests run in the Django test suite. Running these requires 2 container
 images to be available:
 
-  - *a2si-services-api* The Django project
+  - *a2siservicesapi-unittest* The environment in which Django tests can be run
   - *pycodestyle* The linter
 
 These can be built by any user / external process by running this _from the top level of the

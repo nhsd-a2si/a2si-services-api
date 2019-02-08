@@ -15,5 +15,5 @@ echo "Running functional and unit tests"
 docker run --rm \
     -e "DJANGO_SECRET_KEY=NotReallyASecret" \
     -v "`pwd`:/code" \
-    a2si-services-api \
+    a2siservicesapi-unittest \
     /code/services/manage.py test ./services
