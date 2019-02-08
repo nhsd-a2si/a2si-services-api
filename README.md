@@ -97,5 +97,5 @@ End to end tests require that the API be spun up and then interrogated from a se
 These tests can be run as follows from the top level of the project:
 ```
 $ docker-compose -f tests-e2e/docker-compose.e2etest.yml build
-$ docker-compose -f tests-e2e/docker-compose.e2etest.yml run e2etest
+$ docker-compose -f tests-e2e/docker-compose.e2etest.yml run --rm e2etest
 ```
