@@ -12,8 +12,8 @@ steps:
     type: build
     image_name: mcbhenwood/a2siservicesapi-unittest
     working_directory: ./
-    tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
     dockerfile: Dockerfile
+    tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
     stage: build_unit_test
 
   BuildLinterDockerImage:
@@ -21,8 +21,8 @@ steps:
     type: build
     image_name: mcbhenwood/pycodestyle
     working_directory: ./pycodestyle
-    tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
     dockerfile: Dockerfile
+    tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
     stage: build_unit_test
 
   LintCodebase:
@@ -46,8 +46,8 @@ steps:
     type: build
     image_name: mcbhenwood/a2siservicesapi
     working_directory: ./
-    tag: latest
     dockerfile: Dockerfile.prod
+    tag: latest
     stage: build_e2e_test
 
   BuildE2ETest:
