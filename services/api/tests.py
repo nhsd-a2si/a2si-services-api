@@ -25,3 +25,10 @@ class HealthcheckTestCase(APITestCase):
         response = self.client.get('/health',
                                    HTTP_HOST='unknown.hostname')
         self.assertEqual(200, response.status_code)
+
+    def test_allowed_hosts_honoured_for_write_methods(self):
+        for method in (self.client.put, self.client.post, self.client.delete):
+            with self.subTest(method=method):
+                response = method('/health',
+                                  HTTP_HOST='unknown.hostname')
+                self.assertEqual(400, response.status_code)

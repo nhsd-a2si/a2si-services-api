@@ -6,6 +6,6 @@ class AllAllowedHostsHealthCheckerMiddleware(object):
         self.get_response = get_response
 
     def __call__(self, request):
-        if request.path == '/health':
+        if request.path == '/health' and request.method == 'GET':
             return JsonResponse(dict(health='OK'))
         return self.get_response(request)
