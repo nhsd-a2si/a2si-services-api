@@ -16,10 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from api.views import HealthView, PlaceholderView
+from api.views import PlaceholderView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('health', HealthView.as_view()),
     path('placeholder/', PlaceholderView.as_view())
 ]
