@@ -5,6 +5,7 @@ stages:
   - build_e2e_test
   - e2e_test
   - push_release_image
+  - update_service_image
 
 steps:
   BuildUnitTestEnvironment:
@@ -92,3 +93,13 @@ steps:
     registry: dockerhub
     tag: latest
     stage: push_release_image
+
+  UpdateServiceImage:
+    title "Update ECS service with new Docker Hub image"
+    image: codefresh/cf-deploy-ecs
+    commands:
+      - cfecs-update --image-name mcbhenwood/a2si-services-api --image-tag latest eu-west-2 ProdRealAPI ProdRealAPI
+    environment:
+      - AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}
+      - AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}
+    stage: update_service_image
