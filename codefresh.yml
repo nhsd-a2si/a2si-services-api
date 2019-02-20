@@ -1,0 +1,113 @@
+version: '1.0'
+stages:
+  - build_unit_test
+  - unit_test
+  - build_e2e_test
+  - e2e_test
+  - push_release_image
+  - update_service_image
+
+steps:
+  BuildUnitTestEnvironment:
+    title: Build Unit Test Environment
+    type: build
+    image_name: mcbhenwood/a2siservicesapi-unittest
+    working_directory: ./
+    dockerfile: Dockerfile.dev
+    tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
+    stage: build_unit_test
+
+  BuildLinterDockerImage:
+    title: Build Linter Docker Image
+    type: build
+    image_name: mcbhenwood/pycodestyle
+    working_directory: ./pycodestyle
+    dockerfile: Dockerfile
+    tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
+    stage: build_unit_test
+
+  LintCodebase:
+    title: Lint the Django codebase
+    image: '${{BuildLinterDockerImage}}'
+    commands:
+      - pycodestyle ./services
+    stage: unit_test
+
+  RunDjangoTests:
+    title: "Run the Django unit & functional tests"
+    image: '${{BuildUnitTestEnvironment}}'
+    commands:
+      - ./services/manage.py test ./services
+    environment:
+      - DJANGO_SECRET_KEY=NotReallyASecret
+    stage: unit_test
+
+  BuildProd:
+    title: Build Prod Environment (release candidate)
+    type: build
+    image_name: mcbhenwood/a2siservicesapi
+    working_directory: ./
+    dockerfile: Dockerfile.prod
+    tag: latest
+    stage: build_e2e_test
+
+  BuildE2ETest:
+    title: Build the End-to-End tests
+    type: build
+    image_name: mcbhenwood/a2siservicesapi-e2etest
+    working_directory: ./tests-e2e
+    dockerfile: Dockerfile
+    tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
+    stage: build_e2e_test
+
+  RunE2ETest:
+    title: "Run the End-to-End tests"
+    type: composition
+    working_directory: ./
+    composition:
+      version: '2'
+      services:
+        api:
+          image: '${{BuildProd}}'
+          environment:
+            DJANGO_HOSTNAME: "api"
+            DJANGO_SECRET_KEY: "ThisIsNotReallyASecret"
+          ports:
+            - 8000
+    composition_candidates:
+      e2etest:
+        image: '${{BuildE2ETest}}'
+        environment:
+          API_HOST: "api"
+          API_PORT: "8000"
+        links:
+          - api
+    stage: e2e_test
+
+
+  PushReleaseImage:
+    type: push
+    title: "Push new service release to Docker Hub"
+    candidate: '${{BuildProd}}'
+    image_name: 'mcbhenwood/a2si-services-api'
+    registry: dockerhub
+    tag: latest
+    stage: push_release_image
+    when:
+      branch:
+        only:
+          - master
+
+  UpdateServiceImage:
+    title "Update ECS service with new Docker Hub image"
+    image: codefresh/cf-deploy-ecs
+    commands:
+      - cfecs-update --image-name mcbhenwood/a2si-services-api --image-tag latest eu-west-2 ProdRealAPI ProdRealAPI
+    environment:
+      - AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}
+      - AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}
+    stage: update_service_image
+    when:
+      branch:
+        only:
+          - master
