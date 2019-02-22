@@ -110,7 +110,7 @@ steps:
           - master
 
   UpdateServiceImage:
-    title "Update ECS service with new Docker Hub image"
+    title: "Update ECS service with new Docker Hub image"
     image: codefresh/cf-deploy-ecs
     commands:
       - cfecs-update --image-name mcbhenwood/a2si-services-api --image-tag latest eu-west-2 ProdRealAPI ProdRealAPI
