@@ -98,7 +98,7 @@ steps:
 
   PushReleaseImage:
     type: push
-    title: "Push new service release to Docker Hub"
+    title: "[MASTER] Push new service release to Docker Hub"
     candidate: '${{BuildProd}}'
     image_name: 'mcbhenwood/a2si-services-api'
     registry: dockerhub
@@ -110,7 +110,7 @@ steps:
           - master
 
   UpdateServiceImage:
-    title: "Update ECS service with new Docker Hub image"
+    title: "[MASTER] Update ECS service with new Docker Hub image"
     image: codefresh/cf-deploy-ecs
     commands:
       - cfecs-update --image-name mcbhenwood/a2si-services-api --image-tag latest eu-west-2 ProdRealAPI ProdRealAPI
