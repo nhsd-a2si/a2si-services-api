@@ -84,18 +84,6 @@ steps:
           - api
     stage: e2e_test
 
-  PushStaticAssets:
-    image: '${{BuildUnitTestEnvironment}}'
-    commands:
-      - ./services/manage.py collectstatic --noinput
-    environment:
-      - AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}
-      - AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}
-      - AWS_S3_REGION_NAME=eu-west-2
-      - AWS_STORAGE_BUCKET_NAME=static.a2sisap.mcbhenwood.com
-      - DJANGO_SECRET_KEY=NotReallyASecret
-    stage: update_service
-
   PushReleaseImage:
     type: push
     title: "[MASTER] Push new service release to Docker Hub"
@@ -108,6 +96,18 @@ steps:
       branch:
         only:
           - master
+
+  PushStaticAssets:
+    image: '${{BuildUnitTestEnvironment}}'
+    commands:
+      - ./services/manage.py collectstatic --noinput
+    environment:
+      - AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}
+      - AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}
+      - AWS_S3_REGION_NAME=eu-west-2
+      - AWS_STORAGE_BUCKET_NAME=static.a2sisap.mcbhenwood.com
+      - DJANGO_SECRET_KEY=NotReallyASecret
+    stage: update_service
 
   UpdateServiceImage:
     title: "[MASTER] Update ECS service with new Docker Hub image"
