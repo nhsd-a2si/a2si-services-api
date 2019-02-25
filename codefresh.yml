@@ -5,7 +5,7 @@ stages:
   - build_e2e_test
   - e2e_test
   - push_release_image
-  - update_service_image
+  - update_service
 
 steps:
   BuildUnitTestEnvironment:
@@ -84,10 +84,21 @@ steps:
           - api
     stage: e2e_test
 
+  PushStaticAssets:
+    image: '${{BuildUnitTestEnvironment}}'
+    commands:
+      - ./services/manage.py collectstatic --noinput
+    environment:
+      - AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}
+      - AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}
+      - AWS_S3_REGION_NAME=eu-west-2
+      - AWS_STORAGE_BUCKET_NAME=static.a2sisap.mcbhenwood.com
+      - DJANGO_SECRET_KEY=NotReallyASecret
+    stage: update_service
 
   PushReleaseImage:
     type: push
-    title: "Push new service release to Docker Hub"
+    title: "[MASTER] Push new service release to Docker Hub"
     candidate: '${{BuildProd}}'
     image_name: 'mcbhenwood/a2si-services-api'
     registry: dockerhub
@@ -99,14 +110,14 @@ steps:
           - master
 
   UpdateServiceImage:
-    title "Update ECS service with new Docker Hub image"
+    title: "[MASTER] Update ECS service with new Docker Hub image"
     image: codefresh/cf-deploy-ecs
     commands:
       - cfecs-update --image-name mcbhenwood/a2si-services-api --image-tag latest eu-west-2 ProdRealAPI ProdRealAPI
     environment:
       - AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}
       - AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}
-    stage: update_service_image
+    stage: update_service
     when:
       branch:
         only:
