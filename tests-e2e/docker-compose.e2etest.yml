@@ -13,11 +13,14 @@ services:
       - "../services:/code"
 
   e2etest:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     environment:
       API_HOST: "api"
       API_PORT: "8000"
+      API_SCHEME: "http"
     volumes:
-      - ".:/test"
+      - "./features:/tests/features"
     depends_on:
       - api
