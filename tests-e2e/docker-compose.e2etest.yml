@@ -2,7 +2,7 @@ version: '3.7'
 services:
   api:
     build:
-      context: ..
+      context: ../services
       dockerfile: Dockerfile.prod
     environment:
       DJANGO_HOSTNAME: "api"
@@ -10,7 +10,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - "..:/code"
+      - "../services:/code"
 
   e2etest:
     build: .
