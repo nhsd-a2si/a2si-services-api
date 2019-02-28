@@ -12,8 +12,8 @@ steps:
     title: Build Unit Test Environment
     type: build
     image_name: mcbhenwood/a2siservicesapi-unittest
-    working_directory: ./
-    dockerfile: Dockerfile.dev
+    working_directory: ./services
+    dockerfile: Dockerfile.ci
     tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
     stage: build_unit_test
 
@@ -37,7 +37,7 @@ steps:
     title: "Run the Django unit & functional tests"
     image: '${{BuildUnitTestEnvironment}}'
     commands:
-      - ./services/manage.py test ./services
+      - /code/manage.py test /code
     environment:
       - DJANGO_SECRET_KEY=NotReallyASecret
     stage: unit_test
@@ -46,7 +46,7 @@ steps:
     title: Build Prod Environment (release candidate)
     type: build
     image_name: mcbhenwood/a2siservicesapi
-    working_directory: ./
+    working_directory: ./services
     dockerfile: Dockerfile.prod
     tag: latest
     stage: build_e2e_test

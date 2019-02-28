@@ -14,18 +14,18 @@ docker build \
 echo "Building a2siservicesapi-unittest image"
 docker build \
 	-t a2siservicesapi-unittest \
-	-f Dockerfile.dev \
-	.
+	-f services/Dockerfile.dev \
+	services
 
 echo "Running linter tests"
 docker run --rm \
-    -v "`pwd`:/code" \
+    -v "`pwd`/services:/code" \
     pycodestyle \
-    /code/services
+    /code
 
 echo "Running functional and unit tests"
 docker run --rm \
     -e "DJANGO_SECRET_KEY=NotReallyASecret" \
-    -v "`pwd`:/code" \
+    -v "`pwd`/services:/code" \
     a2siservicesapi-unittest \
-    /code/services/manage.py test ./services
+    /code/manage.py test /code
