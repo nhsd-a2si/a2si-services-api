@@ -46,7 +46,7 @@ steps:
     title: Build Prod Environment (release candidate)
     type: build
     image_name: mcbhenwood/a2siservicesapi
-    working_directory: ./
+    working_directory: ./services
     dockerfile: Dockerfile.prod
     tag: latest
     stage: build_e2e_test
