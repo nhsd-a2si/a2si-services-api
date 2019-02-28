@@ -56,11 +56,5 @@ $ developer-scripts/run-functional-tests.sh
 End to end tests require that the API be spun up and then interrogated from a separate container.
 These tests can be run as follows from the top level of the project:
 ```
-$ docker-compose -f tests-e2e/docker-compose.e2etest.yml run --rm e2etest
-```
-This will stop the e2etest container at the end and the exit code will be the exit code of the
-tests. The e2etest container will also be removed. Dependency containers will not. These can be
-stopped and removed with:
-```
-$ docker-compose -f tests-e2e/docker-compose.e2etest.yml down
+$ developer-scripts/run-e2e-tests.sh
 ```
