@@ -1,0 +1,4 @@
+FROM python:3.5-alpine
+ENV PYTHONUNBUFFERED 1
+COPY requirements /code/requirements
+RUN pip install -r /code/requirements/base.txt -r /code/requirements/dev.txt
