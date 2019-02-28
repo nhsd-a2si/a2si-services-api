@@ -3,17 +3,21 @@ services:
   api:
     build:
       context: ..
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.dev
     environment:
       DJANGO_HOSTNAME: "api"
       DJANGO_SECRET_KEY: "ThisIsNotReallyASecret"
     ports:
       - "8000:8000"
+    volumes:
+      - "..:/code"
 
   e2etest:
     build: .
     environment:
       API_HOST: "api"
       API_PORT: "8000"
+    volumes:
+      - ".:/test"
     depends_on:
       - api
