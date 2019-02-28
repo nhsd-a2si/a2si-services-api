@@ -23,9 +23,6 @@ This will expose the Django dev server on localhost port 8000:
 ```
 $ developer-scripts/run-dev-server.sh
 ```
-(The 'build' step is only required if you have never run it or if the build details have changed
-since you last ran it).
-
 The 'run' command maps your local folders to the Docker container so the command will run using the
 code as it looks right now on your machine.
 

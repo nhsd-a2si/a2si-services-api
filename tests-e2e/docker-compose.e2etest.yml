@@ -2,7 +2,7 @@ version: '3.7'
 services:
   api:
     build:
-      context: ..
+      context: ../services
       dockerfile: Dockerfile.prod
     environment:
       DJANGO_HOSTNAME: "api"
@@ -10,14 +10,17 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - "..:/code"
+      - "../services:/code"
 
   e2etest:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     environment:
       API_HOST: "api"
       API_PORT: "8000"
+      API_SCHEME: "http"
     volumes:
-      - ".:/test"
+      - "./features:/tests/features"
     depends_on:
       - api
