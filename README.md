@@ -21,14 +21,7 @@ installed.
 ### Running the Django dev server
 This will expose the Django dev server on localhost port 8000:
 ```
-$ docker build -t a2siservicesapi-devserver -f Dockerfile.dev .
-$ docker run --rm \
-     -e "DJANGO_SECRET_KEY=NotReallyASecret" \
-     -e "DJANGO_DEBUG_MODE=1" \
-     -p "8000:8000" \
-     -v "`pwd`:/code" \
-     a2siservicesapi-devserver \
-     ./services/manage.py runserver 0.0.0.0:8000
+$ developer-scripts/run-dev-server.sh
 ```
 (The 'build' step is only required if you have never run it or if the build details have changed
 since you last ran it).
