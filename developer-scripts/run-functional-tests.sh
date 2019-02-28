@@ -6,11 +6,23 @@
 # Run this from the top level of the project.
 ###
 set -e
+echo "Building pycodestyle linter image"
+docker build \
+	-t pycodestyle \
+	pycodestyle
+
+echo "Building a2siservicesapi-unittest image"
+docker build \
+	-t a2siservicesapi-unittest \
+	-f Dockerfile.dev \
+	.
+
 echo "Running linter tests"
 docker run --rm \
     -v "`pwd`:/code" \
     pycodestyle \
     /code/services
+
 echo "Running functional and unit tests"
 docker run --rm \
     -e "DJANGO_SECRET_KEY=NotReallyASecret" \

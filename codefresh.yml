@@ -84,6 +84,19 @@ steps:
           - api
     stage: e2e_test
 
+  PushReleaseImage:
+    type: push
+    title: "[MASTER] Push new service release to Docker Hub"
+    candidate: '${{BuildProd}}'
+    image_name: 'mcbhenwood/a2si-services-api'
+    registry: dockerhub
+    tag: latest
+    stage: push_release_image
+    # when:
+    #  branch:
+    #    only:
+    #      - master
+
   PushStaticAssets:
     image: '${{BuildUnitTestEnvironment}}'
     commands:
@@ -96,19 +109,6 @@ steps:
       - DJANGO_SECRET_KEY=NotReallyASecret
     stage: update_service
 
-  PushReleaseImage:
-    type: push
-    title: "[MASTER] Push new service release to Docker Hub"
-    candidate: '${{BuildProd}}'
-    image_name: 'mcbhenwood/a2si-services-api'
-    registry: dockerhub
-    tag: latest
-    stage: push_release_image
-    when:
-      branch:
-        only:
-          - master
-
   UpdateServiceImage:
     title: "[MASTER] Update ECS service with new Docker Hub image"
     image: codefresh/cf-deploy-ecs
@@ -118,7 +118,7 @@ steps:
       - AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}
       - AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}
     stage: update_service
-    when:
-      branch:
-        only:
-          - master
+    #when:
+    #  branch:
+    #    only:
+    #      - master
