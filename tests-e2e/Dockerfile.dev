@@ -1,5 +1,5 @@
 FROM node:8-alpine
-COPY wait-for-api.sh /scripts/
+COPY container-scripts /scripts
 COPY package.json package-lock.json /tests/
 WORKDIR /tests
 RUN npm install
