@@ -1,0 +1,8 @@
+FROM node:8-alpine
+COPY container-scripts /scripts
+COPY package.json package-lock.json /tests/
+WORKDIR /tests
+RUN npm install
+COPY ./features /tests/features
+ENTRYPOINT ["/scripts/wait-for-api.sh"]
+CMD ["npm", "test"]
