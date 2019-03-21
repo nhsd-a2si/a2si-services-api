@@ -5,4 +5,4 @@ WORKDIR /tests
 RUN npm install
 COPY ./features /tests/features
 ENTRYPOINT ["/scripts/wait-for-api.sh"]
-CMD ["npm", "test"]
+CMD ["npm", "test", "--fail-fast"]
