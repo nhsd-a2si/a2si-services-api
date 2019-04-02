@@ -33,7 +33,7 @@ steps:
       - pycodestyle ./services
     stage: unit_test
 
-  RunDjangoTests:
+  RunDjangoTest:
     title: "Run the Django unit & functional tests"
     image: '${{BuildUnitTestEnvironment}}'
     commands:
