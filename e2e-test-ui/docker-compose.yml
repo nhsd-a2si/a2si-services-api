@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  api:
+    build:
+      context: ../services
+      dockerfile: Dockerfile.prod
+    environment:
+      DJANGO_HOSTNAME: "api"
+      DJANGO_SECRET_KEY: "ThisIsNotReallyASecret"
+    ports:
+      - "8000:8000"
+    volumes:
+      - "../services:/code"
+
+  e2etestui:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    environment:
+      API_HOST: "api"
+      API_PORT: "8000"
+      API_SCHEME: "http"
+    volumes:
+      - "./features:/tests/features"
+    depends_on:
+      - api
