@@ -12,7 +12,7 @@ services:
     volumes:
       - "../services:/code"
 
-  e2etest:
+  e2etestapi:
     build:
       context: .
       dockerfile: Dockerfile.dev
