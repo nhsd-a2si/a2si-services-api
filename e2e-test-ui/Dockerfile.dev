@@ -1,0 +1,22 @@
+FROM node:8-alpine
+RUN apk update && apk upgrade && \
+    echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+    echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
+    apk add --no-cache \
+      chromium@edge \
+      nss@edge \
+      freetype@edge \
+      harfbuzz@edge \
+      ttf-freefont@edge
+WORKDIR /tests
+RUN addgroup -S pptruser && adduser -S -g pptruser pptruser \
+    && mkdir -p /home/pptruser/Downloads \
+    && chown -R pptruser:pptruser /home/pptruser \
+    && chown -R pptruser:pptruser /tests
+USER pptruser
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+COPY container-scripts /scripts
+COPY package.json package-lock.json /tests/
+RUN npm install
+ENTRYPOINT ["/scripts/wait-for-api.sh"]
+CMD ["npm", "test"]

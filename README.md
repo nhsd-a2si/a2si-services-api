@@ -51,7 +51,14 @@ $ developer-scripts/run-functional-tests.sh
 ### Running the End-to-End tests
 
 End to end tests require that the API be spun up and then interrogated from a separate container.
-These tests can be run as follows from the top level of the project:
+These tests can be run as follows from the top level of the project.
+
+To run the tests for the API functionality:
 ```
-$ developer-scripts/run-e2e-tests.sh
+$ developer-scripts/run-e2e-tests-api.sh
+```
+
+To run the tests for the UI functionality:
+```
+$ developer-scripts/run-e2e-tests-ui.sh
 ```

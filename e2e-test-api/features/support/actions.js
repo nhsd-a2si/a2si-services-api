@@ -1,5 +1,5 @@
 const assert = require('assert');
-const pages = require('./pages');
+const paths = require('./paths');
 const requester = require('./requester');
 const scope = require('./scope');
 
@@ -13,7 +13,7 @@ const actions = {
   },
 
   retrievePlaceholderObject: async() => {
-    scope.placeholderObject = await requester.get(pages.placeholder);
+    scope.placeholderObject = await requester.get(paths.placeholder);
   }
 };
 

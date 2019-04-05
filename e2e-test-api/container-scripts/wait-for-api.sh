@@ -13,5 +13,5 @@ do
 	sleep 0.5
 done
 
->&2 echo "$WAIT_HOST:$WAIT_PORT is up - running $CMD"
+>&2 echo "$API_HOST:$API_PORT is up - running $CMD"
 exec $CMD

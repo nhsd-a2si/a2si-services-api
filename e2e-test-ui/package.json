@@ -1,11 +1,12 @@
 {
-  "name": "a2si-services-api-tests-e2e",
+  "name": "a2si-services-api-e2e-test-ui",
   "version": "1.0.0",
-  "description": "E2E tests for prototype Services API",
+  "description": "UI E2E tests for prototype Services API",
   "devDependencies": {
     "build-url": "^1.3.2",
+    "chai": "^4.2.0",
     "cucumber": "^5.1.0",
-    "node-fetch": "^2.3.0"
+    "puppeteer": "^1.11.0"
   },
   "scripts": {
     "test": "API_SCHEME=http API_HOST=api API_PORT=8000 npx cucumber-js"

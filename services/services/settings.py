@@ -124,8 +124,8 @@ USE_TZ = True
 STATIC_URL = os.environ.get('DJANGO_STATIC_URL', '/static/')
 
 # Collect static files and place in S3 bucket
-try:
-    import storages  # Are we in build?
+if 'AWS_STORAGE_BUCKET_NAME' in os.environ:
+    import storages
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME')
     AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
@@ -133,5 +133,3 @@ try:
     AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
     AWS_DEFAULT_ACL = 'public-read'
     AWS_AUTO_CREATE_BUCKET = False
-except ImportError:
-    pass

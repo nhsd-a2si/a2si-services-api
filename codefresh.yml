@@ -33,7 +33,7 @@ steps:
       - pycodestyle ./services
     stage: unit_test
 
-  RunDjangoTests:
+  RunDjangoTest:
     title: "Run the Django unit & functional tests"
     image: '${{BuildUnitTestEnvironment}}'
     commands:
@@ -51,17 +51,26 @@ steps:
     tag: latest
     stage: build_e2e_test
 
-  BuildE2ETest:
-    title: Build the End-to-End tests
+  BuildE2ETestAPI:
+    title: Build the API End-to-End tests
     type: build
-    image_name: mcbhenwood/a2siservicesapi-e2etest
-    working_directory: ./tests-e2e
+    image_name: mcbhenwood/a2siservicesapi-e2etest-api
+    working_directory: ./e2e-test-api
     dockerfile: Dockerfile.ci
     tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
     stage: build_e2e_test
 
-  RunE2ETest:
-    title: "Run the End-to-End tests"
+  BuildE2ETestUI:
+    title: Build the UI End-to-End tests
+    type: build
+    image_name: mcbhenwood/a2siservicesapi-e2etest-ui
+    working_directory: ./e2e-test-ui
+    dockerfile: Dockerfile.ci
+    tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
+    stage: build_e2e_test
+
+  RunE2ETestAPI:
+    title: "Run the API End-to-End tests"
     type: composition
     working_directory: ./
     composition:
@@ -76,7 +85,32 @@ steps:
             - 8000
     composition_candidates:
       e2etest:
-        image: '${{BuildE2ETest}}'
+        image: '${{BuildE2ETestAPI}}'
+        environment:
+          API_HOST: "api"
+          API_PORT: "8000"
+          API_SCHEME: "http"
+        links:
+          - api
+    stage: e2e_test
+
+  RunE2ETestUI:
+    title: "Run the UI End-to-End tests"
+    type: composition
+    working_directory: ./
+    composition:
+      version: '2'
+      services:
+        api:
+          image: '${{BuildProd}}'
+          environment:
+            DJANGO_HOSTNAME: "api"
+            DJANGO_SECRET_KEY: "ThisIsNotReallyASecret"
+          ports:
+            - 8000
+    composition_candidates:
+      e2etest:
+        image: '${{BuildE2ETestUI}}'
         environment:
           API_HOST: "api"
           API_PORT: "8000"
