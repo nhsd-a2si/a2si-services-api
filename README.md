@@ -8,7 +8,7 @@ This is currently an alpha / Proof of Concept.
 Infrastructure provision is set out in the [a2si-services-api-infrastructure](https://github.com/nhsd-a2si/a2si-services-api-infrastructure)
 repo.
 
-[![Codefresh build status]( https://g.codefresh.io/api/badges/pipeline/mcbhenwood/nhsd-a2si%2Fa2si-services-api%2Fa2si-services-api-test?type=cf-1)]( https://g.codefresh.io/public/accounts/mcbhenwood/pipelines/nhsd-a2si/a2si-services-api/a2si-services-api-test)
+[![Codefresh build status]( https://g.codefresh.io/api/badges/pipeline/mcbhenwood/nhsd-a2si%2Fa2si-services-api%2Fa2si-services-api?branch=master&key=eyJhbGciOiJIUzI1NiJ9.NWM1ODM1YTdmMTZlNTQ2YjBjY2U0MWRl.x_m0MBZbiG5Pv3RP3jXMQOF56t2HyjRFuoOxyLHBzrE&type=cf-1)]( https://g.codefresh.io/pipelines/a2si-services-api/builds?repoOwner=nhsd-a2si&repoName=a2si-services-api&serviceName=nhsd-a2si%2Fa2si-services-api&filter=trigger:build~Build;branch:master;pipeline:5ca76c5e53c6dd5550f9ccea~a2si-services-api)
 
 ## Developer Notes
 
