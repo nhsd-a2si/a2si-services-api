@@ -15,6 +15,7 @@ docker build \
 
 echo "Running dev server on localhost:$PORT"
 docker run --rm \
+     -e "DJANGO_PAGE_TITLE=A2SI Services API (prototype) - Dev" \
      -e "DJANGO_SECRET_KEY=NotReallyASecret" \
      -e "DJANGO_DEBUG_MODE=1" \
      -p "$PORT:8000" \
