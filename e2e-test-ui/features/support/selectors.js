@@ -1,6 +1,6 @@
 const selectors = {
   jsonResponseInfo: '.response-info',
-  pageTitle: 'a.navbar-brand'
+  pageTitle: 'span.navbar-brand'
 };
 
 module.exports = selectors;
