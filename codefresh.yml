@@ -128,10 +128,10 @@ steps:
     registry: dockerhub
     tag: latest
     stage: push_release_image
-    # when:
-    #  branch:
-    #    only:
-    #      - master
+    when:
+      branch:
+        only:
+          - master
 
   PushStaticAssets:
     image: '${{BuildUnitTestEnvironment}}'
@@ -154,7 +154,7 @@ steps:
       - AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}
       - AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}
     stage: update_service
-    #when:
-    #  branch:
-    #    only:
-    #      - master
+    when:
+      branch:
+        only:
+          - master
