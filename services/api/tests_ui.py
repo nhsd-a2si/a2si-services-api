@@ -6,4 +6,4 @@ class UiHeaderTestCase(TestCase):
         response = self.client.get('/placeholder/',
                                    HTTP_ACCEPT='text/html')
         self.assertContains(response,
-                            'A2SI Services API (prototype) - Dev')
+                            'A2SI Services API (prototype) - Func Tests')
