@@ -39,6 +39,7 @@ steps:
     commands:
       - /code/manage.py test /code
     environment:
+      - "DJANGO_PAGE_TITLE=A2SI Services API (prototype) - Dev"
       - DJANGO_SECRET_KEY=NotReallyASecret
     stage: unit_test
 
