@@ -75,6 +75,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'services.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'services.renderers.ServicesBrowsableAPIRenderer',
+    )
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -135,3 +142,5 @@ if 'AWS_STORAGE_BUCKET_NAME' in os.environ:
     AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
     AWS_DEFAULT_ACL = 'public-read'
     AWS_AUTO_CREATE_BUCKET = False
+
+PAGE_TITLE = os.environ['DJANGO_PAGE_TITLE']
