@@ -143,4 +143,4 @@ if 'AWS_STORAGE_BUCKET_NAME' in os.environ:
     AWS_DEFAULT_ACL = 'public-read'
     AWS_AUTO_CREATE_BUCKET = False
 
-PAGE_TITLE = os.environ['DJANGO_PAGE_TITLE']
+PAGE_TITLE = os.environ.get('DJANGO_PAGE_TITLE', 'Set DJANGO_PAGE_TITLE')

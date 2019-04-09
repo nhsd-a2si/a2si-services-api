@@ -81,7 +81,6 @@ steps:
           image: '${{BuildProd}}'
           environment:
             DJANGO_HOSTNAME: "api"
-            DJANGO_PAGE_TITLE: "A2SI Services API (prototype) - E2E API Tests"
             DJANGO_SECRET_KEY: "ThisIsNotReallyASecret"
           ports:
             - 8000
