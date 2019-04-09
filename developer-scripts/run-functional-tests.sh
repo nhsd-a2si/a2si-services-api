@@ -25,7 +25,7 @@ docker run --rm \
 
 echo "Running functional and unit tests"
 docker run --rm \
-    -e "DJANGO_PAGE_TITLE=A2SI Services API (prototype) - Dev" \
+    -e "DJANGO_PAGE_TITLE=A2SI Services API (prototype) - Func Tests" \
     -e "DJANGO_SECRET_KEY=NotReallyASecret" \
     -v "`pwd`/services:/code" \
     a2siservicesapi-unittest \

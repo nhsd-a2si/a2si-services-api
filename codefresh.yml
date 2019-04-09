@@ -39,6 +39,7 @@ steps:
     commands:
       - /code/manage.py test /code
     environment:
+      - "DJANGO_PAGE_TITLE=A2SI Services API (prototype) - Func Tests"
       - DJANGO_SECRET_KEY=NotReallyASecret
     stage: unit_test
 
@@ -80,6 +81,7 @@ steps:
           image: '${{BuildProd}}'
           environment:
             DJANGO_HOSTNAME: "api"
+            DJANGO_PAGE_TITLE: "A2SI Services API (prototype) - E2E API Tests"
             DJANGO_SECRET_KEY: "ThisIsNotReallyASecret"
           ports:
             - 8000
@@ -105,6 +107,7 @@ steps:
           image: '${{BuildProd}}'
           environment:
             DJANGO_HOSTNAME: "api"
+            DJANGO_PAGE_TITLE: "A2SI Services API (prototype) - E2E UI Tests"
             DJANGO_SECRET_KEY: "ThisIsNotReallyASecret"
           ports:
             - 8000
@@ -127,12 +130,13 @@ steps:
     registry: dockerhub
     tag: latest
     stage: push_release_image
-    # when:
-    #  branch:
-    #    only:
-    #      - master
+    when:
+      branch:
+        only:
+          - master
 
   PushStaticAssets:
+    title: "[MASTER] Push static assets to S3"
     image: '${{BuildUnitTestEnvironment}}'
     commands:
       - ./services/manage.py collectstatic --noinput
@@ -143,6 +147,10 @@ steps:
       - AWS_STORAGE_BUCKET_NAME=static.a2sisap.mcbhenwood.com
       - DJANGO_SECRET_KEY=NotReallyASecret
     stage: update_service
+    when:
+      branch:
+        only:
+          - master
 
   UpdateServiceImage:
     title: "[MASTER] Update ECS service with new Docker Hub image"
@@ -153,7 +161,7 @@ steps:
       - AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}
       - AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}
     stage: update_service
-    #when:
-    #  branch:
-    #    only:
-    #      - master
+    when:
+      branch:
+        only:
+          - master
