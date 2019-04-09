@@ -134,6 +134,7 @@ steps:
           - master
 
   PushStaticAssets:
+    title: "[MASTER] Push static assets to S3"
     image: '${{BuildUnitTestEnvironment}}'
     commands:
       - ./services/manage.py collectstatic --noinput
@@ -144,6 +145,10 @@ steps:
       - AWS_STORAGE_BUCKET_NAME=static.a2sisap.mcbhenwood.com
       - DJANGO_SECRET_KEY=NotReallyASecret
     stage: update_service
+    when:
+      branch:
+        only:
+          - master
 
   UpdateServiceImage:
     title: "[MASTER] Update ECS service with new Docker Hub image"
