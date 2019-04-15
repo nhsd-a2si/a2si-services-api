@@ -3,3 +3,5 @@ ENV PYTHONUNBUFFERED 1
 RUN pip install --upgrade pip
 COPY requirements /code/requirements
 RUN pip install -r /code/requirements/base.txt -r /code/requirements/dev.txt
+EXPOSE 8000
+ENTRYPOINT ["/code/manage.py"]

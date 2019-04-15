@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  devserver:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: runserver 0.0.0.0:8000
+    environment:
+      DJANGO_DEBUG_MODE: "1"
+      DJANGO_PAGE_TITLE: "A2SI Services API (prototype) - Dev"
+      DJANGO_SECRET_KEY: "ThisIsNotReallyASecret"
+    ports:
+      - "8000:8000"
+    volumes:
+      - "../services:/code"
