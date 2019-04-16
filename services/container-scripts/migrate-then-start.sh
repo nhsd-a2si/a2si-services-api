@@ -14,6 +14,7 @@ do
 	>&2 echo "Waiting for db to become available on $DB_HOST:$DB_PORT"
 	sleep 0.5
 done
+# TODO - Constrain this next step to only running on one of the container instances in prod
 >&2 echo "$DB_HOST:$DB_PORT is up - running migrations"
 /code/manage.py migrate
 >&2 echo "Running $START_CMD"
