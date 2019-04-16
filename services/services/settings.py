@@ -96,7 +96,7 @@ if DJANGO_DB_HOST:
         'USER': os.environ['DJANGO_DB_USER'],
         'PASSWORD': os.environ['DJANGO_DB_PASSWORD'],
         'HOST': DJANGO_DB_HOST,
-        'PORT': '5432',
+        'PORT': os.environ['DJANGO_DB_PORT'],
     }
 else:
     DATABASES['default'] = {

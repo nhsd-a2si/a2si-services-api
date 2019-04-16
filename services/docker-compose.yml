@@ -11,9 +11,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: /code/manage.py runserver 0.0.0.0:8000
+    command: defaultdb 5432 /code/manage.py runserver 0.0.0.0:8000
     environment:
       DJANGO_DB_HOST: "defaultdb"
+      DJANGO_DB_PORT: "5432"
       DJANGO_DB_NAME: "devserver"
       DJANGO_DB_USER: "django"
       DJANGO_DB_PASSWORD: "password"
