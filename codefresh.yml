@@ -75,15 +75,28 @@ steps:
     type: composition
     working_directory: ./
     composition:
-      version: '2'
+      version: '3'
       services:
         api:
           image: '${{BuildProd}}'
           environment:
+            DJANGO_DB_HOST: "defaultdb"
+            DJANGO_DB_PORT: "5432"
+            DJANGO_DB_NAME: "ci"
+            DJANGO_DB_USER: "django"
+            DJANGO_DB_PASSWORD: "password"
             DJANGO_HOSTNAME: "api"
             DJANGO_SECRET_KEY: "ThisIsNotReallyASecret"
           ports:
             - 8000
+          depends_on:
+            - defaultdb
+        defaultdb:
+          image: "postgres:11.2-alpine"
+          environment:
+            POSTGRES_DB: "ci"
+            POSTGRES_USER: "django"
+            POSTGRES_PASSWORD: "password"
     composition_candidates:
       e2etest:
         image: '${{BuildE2ETestAPI}}'
@@ -100,16 +113,29 @@ steps:
     type: composition
     working_directory: ./
     composition:
-      version: '2'
+      version: '3'
       services:
         api:
           image: '${{BuildProd}}'
           environment:
+            DJANGO_DB_HOST: "defaultdb"
+            DJANGO_DB_PORT: "5432"
+            DJANGO_DB_NAME: "ci"
+            DJANGO_DB_USER: "django"
+            DJANGO_DB_PASSWORD: "password"
             DJANGO_HOSTNAME: "api"
             DJANGO_PAGE_TITLE: "A2SI Services API (prototype) - E2E UI Tests"
             DJANGO_SECRET_KEY: "ThisIsNotReallyASecret"
           ports:
             - 8000
+          depends_on:
+            - defaultdb
+        defaultdb:
+          image: "postgres:11.2-alpine"
+          environment:
+            POSTGRES_DB: "ci"
+            POSTGRES_USER: "django"
+            POSTGRES_PASSWORD: "password"
     composition_candidates:
       e2etest:
         image: '${{BuildE2ETestUI}}'
