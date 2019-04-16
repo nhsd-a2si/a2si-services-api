@@ -1,21 +1,21 @@
 version: '1.0'
 stages:
-  - build_unit_test
-  - unit_test
+  - build_func_test
+  - func_test
   - build_e2e_test
   - e2e_test
   - push_release_image
   - update_service
 
 steps:
-  BuildUnitTestEnvironment:
-    title: Build Unit Test Environment
+  BuildFuncTestEnvironment:
+    title: Build Func Test Environment
     type: build
-    image_name: mcbhenwood/a2siservicesapi-unittest
+    image_name: mcbhenwood/a2siservicesapi-functest
     working_directory: ./services
     dockerfile: Dockerfile.ci
     tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
-    stage: build_unit_test
+    stage: build_func_test
 
   BuildLinterDockerImage:
     title: Build Linter Docker Image
@@ -24,24 +24,24 @@ steps:
     working_directory: ./pycodestyle
     dockerfile: Dockerfile
     tag: '${{CF_BRANCH_TAG_NORMALIZED}}'
-    stage: build_unit_test
+    stage: build_func_test
 
   LintCodebase:
     title: Lint the Django codebase
     image: '${{BuildLinterDockerImage}}'
     commands:
       - pycodestyle ./services
-    stage: unit_test
+    stage: func_test
 
   RunDjangoTest:
-    title: "Run the Django unit & functional tests"
-    image: '${{BuildUnitTestEnvironment}}'
+    title: "Run the Django functional tests"
+    image: '${{BuildFuncTestEnvironment}}'
     commands:
       - /code/manage.py test /code
     environment:
       - "DJANGO_PAGE_TITLE=A2SI Services API (prototype) - Func Tests"
       - DJANGO_SECRET_KEY=NotReallyASecret
-    stage: unit_test
+    stage: func_test
 
   BuildProd:
     title: Build Prod Environment (release candidate)
@@ -136,7 +136,7 @@ steps:
 
   PushStaticAssets:
     title: "[MASTER] Push static assets to S3"
-    image: '${{BuildUnitTestEnvironment}}'
+    image: '${{BuildFuncTestEnvironment}}'
     commands:
       - ./services/manage.py collectstatic --noinput
     environment:
