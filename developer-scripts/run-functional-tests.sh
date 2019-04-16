@@ -14,7 +14,7 @@ docker build \
 echo "Building a2siservicesapi-unittest image"
 docker build \
 	-t a2siservicesapi-unittest \
-	-f services/Dockerfile.dev \
+	-f services/Dockerfile.functest \
 	services
 
 echo "Running linter tests"
