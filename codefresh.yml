@@ -140,8 +140,8 @@ steps:
     commands:
       - ./services/manage.py collectstatic --noinput
     environment:
-      - AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}
-      - AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}
+      - AWS_ACCESS_KEY_ID=${{DEPLOY_AWS_ACCESS_KEY_ID}}
+      - AWS_SECRET_ACCESS_KEY=${{DEPLOY_AWS_SECRET_ACCESS_KEY}}
       - AWS_S3_REGION_NAME=eu-west-2
       - AWS_STORAGE_BUCKET_NAME=static.a2sisap.mcbhenwood.com
       - DJANGO_SECRET_KEY=NotReallyASecret
@@ -157,8 +157,8 @@ steps:
     commands:
       - cfecs-update --image-name mcbhenwood/a2si-services-api --image-tag latest eu-west-2 ProdRealAPI ProdRealAPI
     environment:
-      - AWS_ACCESS_KEY_ID=${{AWS_ACCESS_KEY_ID}}
-      - AWS_SECRET_ACCESS_KEY=${{AWS_SECRET_ACCESS_KEY}}
+      - AWS_ACCESS_KEY_ID=${{DEPLOY_AWS_ACCESS_KEY_ID}}
+      - AWS_SECRET_ACCESS_KEY=${{DEPLOY_AWS_SECRET_ACCESS_KEY}}
     stage: update_service
     when:
       branch:
