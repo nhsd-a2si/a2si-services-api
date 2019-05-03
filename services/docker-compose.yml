@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  defaultdb:
+    image: "postgres:11.2-alpine"
+    environment:
+      POSTGRES_DB: "devserver"
+      POSTGRES_USER: "django"
+      POSTGRES_PASSWORD: "password"
+
+  devserver:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: defaultdb 5432 /code/manage.py runserver 0.0.0.0:8000
+    environment:
+      DJANGO_DB_HOST: "defaultdb"
+      DJANGO_DB_PORT: "5432"
+      DJANGO_DB_NAME: "devserver"
+      DJANGO_DB_USER: "django"
+      DJANGO_DB_PASSWORD: "password"
+      DJANGO_DEBUG_MODE: "1"
+      DJANGO_PAGE_TITLE: "A2SI Services API (prototype) - Dev"
+      DJANGO_SECRET_KEY: "ThisIsNotReallyASecret"
+    ports:
+      - "8000:8000"
+    volumes:
+      - "../services:/code"
+    depends_on:
+      - defaultdb

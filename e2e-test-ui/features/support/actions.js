@@ -19,9 +19,14 @@ const actions = {
     expect(jsonResponseInfoText).to.contain(message);
   },
 
-  pageTitleSays: async(title) => {
+  pageHeaderSays: async(title) => {
     const pageTitle = await scope.context.currentPage.$eval(selectors.pageTitle,
       el => el.innerText);
+    expect(pageTitle).to.equal(title);
+  },
+
+  pageTitleSays: async(title) => {
+    const pageTitle = await scope.context.currentPage.title();
     expect(pageTitle).to.equal(title);
   }
 };
