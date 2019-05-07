@@ -10,7 +10,7 @@
 START_CMD="$@"
 
 >&2 echo "Checking availability of db on $DJANGO_DB_HOST:$DJANGO_DB_PORT"
-until nc -z $DJANGO_DB_HOST $DJANGO_DB_PORT
+until nc -v -w 5 -z $DJANGO_DB_HOST $DJANGO_DB_PORT
 do
 	>&2 echo "Waiting for db to become available on $DJANGO_DB_HOST:$DJANGO_DB_PORT"
 	sleep 0.5
