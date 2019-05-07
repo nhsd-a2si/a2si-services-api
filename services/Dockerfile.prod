@@ -12,4 +12,4 @@ COPY . /code/
 WORKDIR /code
 EXPOSE 8000
 ENTRYPOINT ["/scripts/migrate-then-start.sh"]
-CMD ["defaultdb", "5432", "gunicorn", "-b", "0.0.0.0:8000", "services.wsgi:application"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "services.wsgi:application"]

@@ -3,19 +3,19 @@
 # migrate-then-start.sh
 # ---------------------
 #
-# Run migration and then start whichever command was specified
+# Run migration and then start whichever command was specified.
 #
-DB_HOST="$1" ; shift
-DB_PORT="$1" ; shift
+# Note that the host and port for the db wait are derived from env vars, not args.
+#
 START_CMD="$@"
 
-until nc -z $DB_HOST $DB_PORT
+until nc -z $DJANGO_DB_HOST $DJANGO_DB_PORT
 do
-	>&2 echo "Waiting for db to become available on $DB_HOST:$DB_PORT"
+	>&2 echo "Waiting for db to become available on $DJANGO_DB_HOST:$DJANGO_DB_PORT"
 	sleep 0.5
 done
 # TODO - Constrain this next step to only running on one of the container instances in prod
->&2 echo "$DB_HOST:$DB_PORT is up - running migrations"
+>&2 echo "$DJANGO_DB_HOST:$DJANGO_DB_PORT is up - running migrations"
 /code/manage.py migrate
 >&2 echo "Running $START_CMD"
 exec $START_CMD
