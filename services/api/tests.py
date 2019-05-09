@@ -1,10 +1,11 @@
 import json
 
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 
 
-class PlaceholderTestCase(APITestCase):
-
+class PlaceholderAnonymousTestCase(APITestCase):
     def test_anonymous_get_fails(self):
         response = self.client.get('/placeholder/')
         self.assertEqual(
@@ -15,6 +16,17 @@ class PlaceholderTestCase(APITestCase):
             response['WWW-Authenticate'],
             'Token'
         )
+
+
+class PlaceholderTestCase(APITestCase):
+    def setUp(self):
+        user = User.objects.create_user(
+            'user',
+            'user@example.com',
+            'password')
+        good_token = Token.objects.create(user=user)
+        self.client.credentials(
+            HTTP_AUTHORIZATION='Token {}'.format(good_token))
 
     def test_placeholder_api(self):
         response = self.client.get('/placeholder/')
