@@ -4,6 +4,18 @@ from rest_framework.test import APITestCase
 
 
 class PlaceholderTestCase(APITestCase):
+
+    def test_anonymous_get_fails(self):
+        response = self.client.get('/placeholder/')
+        self.assertEqual(
+            401,
+            response.status_code
+        )
+        self.assertEqual(
+            response['WWW-Authenticate'],
+            'Token'
+        )
+
     def test_placeholder_api(self):
         response = self.client.get('/placeholder/')
         self.assertEqual(
