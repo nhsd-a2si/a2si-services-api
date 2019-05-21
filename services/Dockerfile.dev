@@ -8,6 +8,7 @@ COPY container-scripts /scripts
 COPY requirements /code/requirements
 RUN pip install -r /code/requirements/base.txt -r /code/requirements/dev.txt && \
     apk --purge del .build-deps
+WORKDIR /code
 EXPOSE 8000
 ENTRYPOINT ["/scripts/migrate-then-start.sh"]
 
